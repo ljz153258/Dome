@@ -1,0 +1,89 @@
+﻿
+@{
+    Layout = null;
+}
+@using WeFunModel;
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Edit</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="~/Content/lib/layui-v2.5.5/css/layui.css" media="all">
+    <link rel="stylesheet" href="~/Content/css/public.css" media="all">
+    <script src="~/Content/lib/layui-v2.5.5/layui.js" charset="utf-8"></script>
+    <style>
+
+        body {
+            background-color: #ffffff;
+        }
+    </style>
+    <script type="text/javascript">
+        layui.use(['form'], function () {
+            var form = layui.form,
+                layer = layui.layer,
+                $ = layui.$;
+
+            $("#BtnEdit").click(function () {
+                var o = new Object();
+                o.RoleName = $("#RoleName").val();
+                o.RoleDesc = $("#RoleDesc").val();
+                o.RoleState = $("input[name='RoleState']:checked").val();
+                $.post("/SystemArea/SysRoles/addRoles", o, function (d) {
+                    if (d == "Success") {
+                        layer.msg("修改成功！");
+
+                    } else {
+                        layer.msg("修改失败！");
+                    }
+                });
+            });
+    </script>
+</head>
+<body>
+    <form class="layui-form" action="" method="post">
+        @{ SysRoles sys = ViewBag.sysroles}
+        <input type="text" style="display:none" id="RoleID" value="@sys.RoleID" />
+        <input type="text" style="display:none" id="RoleState"value="@sys.RoleState" />
+        <div class="layui-form-item">
+            <label class="layui-form-label">角色名</label>
+            <div class="layui-input-block">
+                <input type="text" id="RoleName" name="RoleName"  lay-verify="title" autocomplete="off" class="layui-input" value="@sys.RoleName">
+            </div>
+        </div>
+
+        <div class="layui-form-item layui-form-text">
+            <label class="layui-form-label">备注</label>
+            <div class="layui-input-block">
+                <input type="text" id="RoleDesc" autocomplete="off" class="layui-input" value="@sys.RoleDesc" />
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">状态</label>
+            <div class="layui-input-block">
+                @{
+                            if (@sys.RoleState == 1)
+                    {
+                        < input type = "radio" id = "state" name = "state" value = "0" title = "启用" checked />
+                        < input type = "radio" id = "state" name = "state" value = "1" title = "禁用" />
+                    }
+                    else
+                    {
+                        < input type = "radio" id = "state" name = "state" value = "0" title = "启用" checked />
+                        < input type = "radio" id = "state" name = "state" value = "1" title = "禁用" />
+                    }
+                }
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button class="layui-btn" lay-submit lay-filter="formDemo" id="BtnEdit">立即提交</button>
+                <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+            </div>
+        </div>
+    </form>
+</body>
+</html>

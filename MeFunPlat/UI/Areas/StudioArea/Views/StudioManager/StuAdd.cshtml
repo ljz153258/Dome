@@ -1,0 +1,68 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>添加分区</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="~/Content/lib/layui-v2.5.5/css/layui.css" media="all">
+    <link rel="stylesheet" href="~/Content/css/public.css" media="all">
+    <script src="~/Content/lib/layui-v2.5.5/layui.js" charset="utf-8"></script>
+    <script type="text/javascript">
+        layui.use(['form'], function () {
+            var $ = layui.jquery,
+                form = layui.form,
+                layer = layui.layer;
+
+            $("#AddBut").click(function () {
+                var o = new Object();
+                o.RoomName = $("#RoomName").val();
+                o.Remake = $("#Remake").val();
+                o.State = $("#State").val();
+                $.post("/StudioArea/StudioManager/StuAdds", o, function (d) {
+                    if (d == "Success") {
+                        layer.msg("添加成功！");
+                        parent.location.reload();
+                    } else {
+                        layer.msg("添加失败！");
+                    }
+                });
+            });
+        });
+    </script>
+</head>
+<body>
+    <div class="layui-form layuimini-form">
+        <div class="layui-form-item">
+            <label class="layui-form-label required">RoomName</label>
+            <div class="layui-input-block">
+                <input type="text" id="RoomName" name="RoomName" lay-verify="required" lay-reqtext="RoomName不能为空" placeholder="请输入RoomName" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label required">Pemake</label>
+            <div class="layui-input-block">
+                <input type="text" id="Remake" name="Remake" lay-verify="required" lay-reqtext="Remake不能为空" placeholder="请输入Remake" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">State</label>
+            <div class="layui-input-block">
+                <input type="text" id="State" name="State" lay-verify="required" placeholder="请输入State" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button class="layui-btn layui-btn-normal" lay-submit lay-filter="saveBtn" id="AddBut">确认保存</button>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,75 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>添加勋章</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="~/Content/lib/layui-v2.5.5/css/layui.css" media="all">
+    <link rel="stylesheet" href="~/Content/css/public.css" media="all">
+    <script src="~/Content/lib/layui-v2.5.5/layui.js" charset="utf-8"></script>
+    <script type="text/javascript">
+        layui.use(['form'], function () {
+            var $ = layui.jquery,
+                form = layui.form,
+                layer = layui.layer;
+
+            $("#AddBut").click(function () {
+                var o = new Object();
+                o.MedalName = $("#MedalName").val();
+                o.Remake = $("#Remake").val();
+                o.MedalLevel = $("#MedalLevel").val();
+                o.State = $("#State").val();
+                $.post("/LabourArea/MedalManager/MAdd", o, function (d) {
+                    if (d == "Success") {
+                        layer.msg("添加成功！");
+                        parent.location.reload();
+                    } else {
+                        layer.msg("添加失败！");
+                    }
+                });
+            });
+        });
+    </script>
+</head>
+<body>
+    <div class="layui-form layuimini-form">
+        <div class="layui-form-item">
+            <label class="layui-form-label required">MedalName</label>
+            <div class="layui-input-block">
+                <input type="text" id="MedalName" name="MedalName" lay-verify="required" lay-reqtext="MedalName不能为空" placeholder="请输入MedalName" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label required">Remake</label>
+            <div class="layui-input-block">
+                <input type="text" id="Remake" name="Remake" lay-verify="required" lay-reqtext="Remark不能为空" placeholder="请输入Remark" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">MedalLevel</label>
+            <div class="layui-input-block">
+                <input type="text" id="MedalLevel" name="MedalLevel" lay-verify="required" placeholder="请输入MedalLevel" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">State</label>
+            <div class="layui-input-block">
+                <input type="text" id="State" name="State" lay-verify="required" placeholder="请输入State" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button class="layui-btn layui-btn-normal" lay-submit lay-filter="saveBtn" id="AddBut">确认保存</button>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

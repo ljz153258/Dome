@@ -1,0 +1,83 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>添加分区</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="~/Content/lib/layui-v2.5.5/css/layui.css" media="all">
+    <link rel="stylesheet" href="~/Content/css/public.css" media="all">
+    <script src="~/Content/lib/layui-v2.5.5/layui.js" charset="utf-8"></script>
+    <script type="text/javascript">
+        layui.use(['form'], function () {
+            var $ = layui.jquery,
+                form = layui.form,
+                layer = layui.layer;
+
+            $("#AddBut").click(function () {
+                var o = new Object();
+                o.ARName = $("#ARName").val();
+                o.ARParent = $("#ARParent").val();
+                o.ARIndex = $("#ARIndex").val();
+                o.ARState = $("#ARState").val();
+                o.ARReamle = $("#ARReamle").val();
+                $.post("/AreaArea/AreaManager/AddArea", o, function (d) {
+                    if (d == "Success") {
+                        layer.msg("添加成功！");
+                        parent.location.reload();
+                    } else {
+                        layer.msg("添加失败！");
+                    }
+                });
+            });
+        });
+    </script>
+</head>
+<body>
+    <div class="layui-form layuimini-form">
+        <div class="layui-form-item">
+            <label class="layui-form-label required">ARName</label>
+            <div class="layui-input-block">
+                <input type="text" id="ARName" name="ARName" lay-verify="required" lay-reqtext="ARName不能为空" placeholder="请输入ARName" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label required">ARParent</label>
+            <div class="layui-input-block">
+                <input type="text" id="ARParent" name="ARParent" lay-verify="required" lay-reqtext="ARParent不能为空" placeholder="请输入ARParent"  class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">ARIndex</label>
+            <div class="layui-input-block">
+                <input type="text" id="ARIndex" name="ARIndex" lay-verify="required"  placeholder="请输入ARIndex" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">ARState</label>
+            <div class="layui-input-block">
+                <input type="text" id="ARState" name="ARState" lay-verify="required" placeholder="请输入ARState" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item layui-form-text">
+            <label class="layui-form-label">ARReamle</label>
+            <div class="layui-input-block">
+                @*<textarea name="remark" class="layui-textarea" placeholder="请输入备注信息"></textarea>*@
+                <input type="text" id="ARReamle" name="ARReamle" lay-verify="required" placeholder="请输入ARReamle" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button class="layui-btn layui-btn-normal" lay-submit lay-filter="saveBtn" id="AddBut">确认保存</button>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

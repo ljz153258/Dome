@@ -1,0 +1,79 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>add</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="~/Content/lib/layui-v2.5.5/css/layui.css" media="all">
+    <link rel="stylesheet" href="~/Content/css/public.css" media="all">
+    <script src="~/Content/lib/layui-v2.5.5/layui.js" charset="utf-8"></script>
+    <script type="text/javascript">
+        layui.use(['form', 'layedit','laydate'], function () {
+            var form = layui.form,
+                layer = layui.layer,
+                $ = layui.$;
+
+
+            $("#btnAdd").click(function () {
+                var o = new Object();
+                o.RoleName = $("#RoleName").val();
+                o.RoleDesc = $("#RoleDesc").val();
+                o.State = $("input[name='state']:checked").val();
+                $.post("/SystemArea/SysRoles/addRoles", o, function (d) {
+                    if (d == "Success") {
+                        layer.msg("添加成功！");
+                    }
+                    else {
+                        layer.msg("添加失败！");
+                    }
+                });
+            });
+        });
+    </script>
+</head>
+<body>
+    <div class="layuimini-container">
+        <div class="layuimini-main">
+            <form class="layui-form" action="" lay-filter="example">
+
+
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label required">用户名</label>
+                    <div class="layui-input-block">
+                        <input type="text" id="RoleName" lay-varify="required" lay-reqtext="用户名不能为空" placeholder="请输入用户名" value="" class="layui-input" />
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-item required">备注</label>
+                    <div class="layui-input-block">
+                        <input type="text" id="RoleDesc" lay-verify="required" lay-reqtext="备注不能为空" placeholder="请输入备注" value="" class="layui-input" />
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-item required">状态</label>
+                    <div class="layui-input-block">
+                        <input type="radio" name="State" value="0" title="启用" />
+                        <input type="radio" name="State" value="1" title="禁用" />
+
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <div class="layui-input-block">
+                        @*<button class="layui-btn layui-btn-normal" lay-submit lay-filter="saveBtn">确认保存</button>*@
+                        <input class="layui-btn" id="btnAdd" value="立即提交" />
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
